@@ -12,7 +12,7 @@ It is based on the Uno Game, where two NPC (Non player character) plays until so
 To run the program, you first need to have elixir installed and then you can use the following commands:
 
 ```bash
-iex -s mix
+iex -S mix
 ```
 
 Then in iex you run:
