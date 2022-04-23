@@ -1,7 +1,7 @@
 # ElixirUno
 
-This is a project to study about process comunication in elixir.
-It is based on the Uno Game, where two NPC (Non player character) plays until some wins, a NPC Player is an elixir process that has its own PID and send messages to another process (NPC Player).
+This is a project to study about communication between processes with messages in elixir.
+It is based on the Uno Game, where two NPCs (Non player character) plays until one wins, a NPC Player is an elixir process that has its own PID and send messages to another process (NPC Player).
 
 # Screenshots:
 
