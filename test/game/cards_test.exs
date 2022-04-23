@@ -1,5 +1,6 @@
 defmodule CardsTest do
   use ExUnit.Case
+  alias Game.Cards
 
   @deck Cards.generate_deck()
 
@@ -8,12 +9,12 @@ defmodule CardsTest do
   end
 
   test "should have 4 special cards for each card" do
-    assert Enum.count(@deck, fn card -> card == "Wild" end) == 4
-    assert Enum.count(@deck, fn card -> card == "Wild Draw 4" end) == 4
+    assert Enum.count(@deck, fn card -> card == "Wild Color" end) == 4
+    assert Enum.count(@deck, fn card -> card == "Wild Draw4" end) == 4
   end
 
   test "should have 2 special color cards for each card & color" do
-    for card <- ["Draw 2", "Reverse", "Skip"], color <- ["Blue", "Yellow", "Green", "Red"] do
+    for card <- ["Draw2", "Reverse", "Skip"], color <- ["Blue", "Yellow", "Green", "Red"] do
       assert Enum.count(@deck, fn x -> x == "#{color} #{card}" end) == 2
     end
   end

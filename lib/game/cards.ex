@@ -1,4 +1,4 @@
-defmodule Cards do
+defmodule Game.Cards do
   @cards_colors ["Blue", "Yellow", "Green", "Red"]
 
   def generate_deck do
@@ -6,7 +6,7 @@ defmodule Cards do
     shuffle(deck)
   end
 
-  defp shuffle(list) do
+  def shuffle(list) do
     Enum.shuffle(list)
   end
 
@@ -17,13 +17,13 @@ defmodule Cards do
   end
 
   defp generate_special_color_cards do
-    for card <- ["Draw 2", "Reverse", "Skip"], color <- @cards_colors, _n <- 1..2 do
+    for card <- ["Draw2", "Reverse", "Skip"], color <- @cards_colors, _n <- 1..2 do
       "#{color} #{card}"
     end
   end
 
   defp generate_special_cards do
-    for card <- ["Wild", "Wild Draw 4"], _n <- 1..4 do
+    for card <- ["Wild Color", "Wild Draw4"], _n <- 1..4 do
       card
     end
   end
