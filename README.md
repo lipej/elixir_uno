@@ -1,6 +1,31 @@
 # ElixirUno
 
-**TODO: Add description**
+This is a project to study about process comunication in elixir.
+It is based on the Uno Game, where two NPC (Non player character) plays until some wins, a NPC Player is an elixir process that has its own PID and send messages to another process (NPC Player).
+
+# Screenshots:
+
+# Using
+
+To run the program, you first need to have elixir installed and then you can use the following commands:
+
+```bash
+iex -s mix
+```
+
+Then in iex you run:
+
+```elixir
+ElixirUno.start
+```
+
+# Testing
+
+To run test run the following command:
+
+```bash
+mix test
+```
 
 ## Installation
 
