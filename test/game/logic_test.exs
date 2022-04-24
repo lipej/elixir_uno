@@ -2,9 +2,10 @@ defmodule LogicTest do
   use ExUnit.Case
   alias Game.Logic
 
+  @table [%{card: "First", player: 2, used: nil}, %{card: "Last", player: 1, used: nil}]
+
   test "should return last move" do
-    table = [%{card: "First", player: 2}, %{card: "Last", player: 1}]
-    {first, _, player} = Logic.get_last_card(table)
+    {first, _, player, _} = Logic.get_last_card(@table)
     assert first == "Last"
     assert player == 1
   end
@@ -48,7 +49,7 @@ defmodule LogicTest do
 
   test "should return shuffle the table to rest" do
     {rest, table} =
-      Logic.check_cards([], [%{card: "First", player: 2}, %{card: "Last", player: 1}])
+      Logic.check_cards([], @table)
 
     assert table == []
     assert Enum.count(rest) == 2
@@ -63,15 +64,21 @@ defmodule LogicTest do
     wild_cards = ["Wild Color", "Wild Draw4"]
 
     for card <- wild_cards do
-      transformed_card = Logic.transform_wild(card)
+      transformed_card = Logic.transform_wild(card, ["Red draw2"])
       [hd | _] = String.split(transformed_card, " ")
 
-      assert Enum.member?(["Blue", "Green", "Yellow", "Red"], hd) == true
+      assert Enum.member?(["Red"], hd) == true
       assert hd !== "Wild"
     end
   end
 
   test "should return card when is not a wild card" do
-    assert Logic.transform_wild("Not transform me") == "Not transform me"
+    assert Logic.transform_wild("Not transform me", []) == "Not transform me"
+  end
+
+  test "should return colors from cards" do
+    colors = Logic.get_colors(["Red draw2"])
+
+    assert List.first(colors) == "Red"
   end
 end

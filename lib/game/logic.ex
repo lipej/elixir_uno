@@ -34,7 +34,7 @@ defmodule Game.Logic do
         case can_play do
           false ->
             card_to_play = take_card(match)
-            card_transformed = transform_wild(card_to_play)
+            card_transformed = transform_wild(card_to_play, cards)
             Printer.player(player, "PLAYER #{player}: played #{card_to_play}")
             new_player_cards = List.delete(cards, card_to_play)
             new_table = checked_table ++ [%{card: card_transformed, player: player, used: nil}]
@@ -98,9 +98,9 @@ defmodule Game.Logic do
 
   def take_card(rest), do: Enum.random(rest)
 
-  def transform_wild(card) do
-    colors = ["Blue", "Red", "Green", "Yellow"]
+  def transform_wild(card, cards) do
     is_wild = String.contains?(card, "Wild")
+    colors = get_colors(cards)
 
     if is_wild do
       color = Enum.random(colors)
@@ -109,5 +109,9 @@ defmodule Game.Logic do
     else
       card
     end
+  end
+
+  def get_colors(cards) do
+    Enum.map(cards, fn card -> String.split(card) |> List.first() end)
   end
 end
