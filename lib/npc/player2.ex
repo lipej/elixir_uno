@@ -6,7 +6,7 @@ defmodule NPC.Player2 do
     new_cards =
       receive do
         {:player2, pid, table, rest} ->
-          Process.sleep(500)
+          Process.sleep(3000)
           result = Logic.execute(2, table, rest, cards)
 
           case Enum.count(result.cards) do

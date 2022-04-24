@@ -5,14 +5,14 @@ defmodule ElixirUno do
   def start do
     deck = create_deck()
     first_game_card = select_initial_game_card(deck.rest)
-    table = [%{card: first_game_card , player: 0}]
+    table = [%{card: first_game_card , player: 0, used: nil}]
     rest = deck.rest -- [first_game_card]
     player1_pid = spawn(NPC.Player1, :loop, [deck.player1])
     player2_pid = spawn(NPC.Player2, :loop, [deck.player2])
 
-    Printer.white("Starting Uno Game")
+    Printer.white("GAME LOG: Starting Uno Game")
     send(player1_pid, {:player1, player2_pid, table, rest})
-    Printer.green("First table card is #{first_game_card}")
+    Printer.green("GAME LOG: First table card is #{first_game_card}")
   end
 
   defp create_deck do
