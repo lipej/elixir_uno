@@ -52,19 +52,19 @@ defmodule Game.Logic do
 
   def skip(player, rest, table, cards) do
     Printer.player(player, "PLAYER #{player}: cannot play")
-    %{table: table, rest: rest, cards: cards}
+    %{table: use_last_card(table), rest: rest, cards: cards}
   end
 
   def buy_four(player, rest, table, cards) do
     Printer.player(player, "PLAYER #{player}: buy four new cards")
     new_cards = buy(rest, 4)
-    %{table: table, rest: rest -- new_cards, cards: cards ++ new_cards}
+    %{table: use_last_card(table), rest: rest -- new_cards, cards: cards ++ new_cards}
   end
 
   def buy_two(player, rest, table, cards) do
     Printer.player(player, "PLAYER #{player}: buy two new cards")
     new_cards = buy(rest, 2)
-    %{table: table, rest: rest -- new_cards, cards: cards ++ new_cards}
+    %{table: use_last_card(table), rest: rest -- new_cards, cards: cards ++ new_cards}
   end
 
   def use_last_card(table) do
