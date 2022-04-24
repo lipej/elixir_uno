@@ -48,8 +48,7 @@ defmodule LogicTest do
   end
 
   test "should return shuffle the table to rest" do
-    {rest, table} =
-      Logic.check_cards([], @table)
+    {rest, table} = Logic.check_cards([], @table)
 
     assert table == []
     assert Enum.count(rest) == 2
@@ -80,5 +79,10 @@ defmodule LogicTest do
     colors = Logic.get_colors(["Red draw2"])
 
     assert List.first(colors) == "Red"
+  end
+
+  test "should mark a card as used" do
+    table = Logic.use_last_card(@table)
+    assert List.last(table).used == true
   end
 end
