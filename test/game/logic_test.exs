@@ -24,26 +24,26 @@ defmodule LogicTest do
 
   test "should perform wild2 action" do
     rest = ["First", "Second", "Third", "Fourth"]
-    %{rest: rest, table: table, cards: player_cards} = Logic.buy_two(1, rest, [], [])
+    %{rest: rest, table: table, cards: player_cards} = Logic.buy_two(1, rest, @table, [])
 
     assert Enum.count(rest) == 2
-    assert table == []
+    assert List.last(table).used == true
     assert Enum.count(player_cards) == 2
   end
 
   test "should perform wild4 action" do
     rest = ["First", "Second", "Third", "Fourth"]
-    %{rest: rest, table: table, cards: player_cards} = Logic.buy_four(1, rest, [], [])
+    %{rest: rest, table: table, cards: player_cards} = Logic.buy_four(1, rest, @table, [])
 
     assert rest == []
-    assert table == []
+    assert List.last(table).used == true
     assert Enum.count(player_cards) == 4
   end
 
   test "should skip" do
-    %{rest: rest, table: table, cards: cards} = Logic.buy_four(1, [], [], [])
+    %{rest: rest, table: table, cards: cards} = Logic.buy_four(1, [], @table, [])
     assert rest == []
-    assert table == []
+    assert List.last(table).used == true
     assert cards == []
   end
 
@@ -71,14 +71,26 @@ defmodule LogicTest do
     end
   end
 
+  test "should transform wild cards without any other card" do
+    wild_cards = ["Wild Color", "Wild Draw4"]
+
+    for card <- wild_cards do
+      transformed_card = Logic.transform_wild(card, [])
+      [hd | _] = String.split(transformed_card, " ")
+
+      assert Enum.member?(["Red", "Green", "Blue", "Yellow"], hd) == true
+      assert hd !== "Wild"
+    end
+  end
+
   test "should return card when is not a wild card" do
     assert Logic.transform_wild("Not transform me", []) == "Not transform me"
   end
 
   test "should return colors from cards" do
-    colors = Logic.get_colors(["Red draw2"])
+    color = Logic.get_color(["Red draw2"])
 
-    assert List.first(colors) == "Red"
+    assert color == "Red"
   end
 
   test "should mark a card as used" do

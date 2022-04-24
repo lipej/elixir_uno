@@ -100,10 +100,9 @@ defmodule Game.Logic do
 
   def transform_wild(card, cards) do
     is_wild = String.contains?(card, "Wild")
-    colors = get_colors(cards)
 
     if is_wild do
-      color = Enum.random(colors)
+      color = get_color(cards)
       Printer.green("GAME LOG: New color is #{color}")
       String.replace(card, "Wild", color)
     else
@@ -111,7 +110,17 @@ defmodule Game.Logic do
     end
   end
 
-  def get_colors(cards) do
-    Enum.map(cards, fn card -> String.split(card) |> List.first() end)
+  def get_color(cards) do
+    colors = ["Red", "Yellow", "Green", "Blue"]
+
+    colors_from_card =
+      Enum.filter(cards, fn card ->
+        Enum.member?(colors, card |> String.split(" ") |> List.first())
+      end)
+
+    case Enum.empty?(colors_from_card) do
+      true -> Enum.random(colors)
+      _ -> Enum.random(colors_from_card) |> String.split(" ") |> List.first()
+    end
   end
 end
